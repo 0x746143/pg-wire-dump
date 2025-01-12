@@ -10,12 +10,14 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.jdbc.postgresql)
     testImplementation(kotlin("test"))
 }
 
 tasks.test {
     useJUnitPlatform()
 }
+
 kotlin {
     jvmToolchain(21)
 }
