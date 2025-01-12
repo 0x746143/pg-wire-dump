@@ -11,6 +11,8 @@ repositories {
 
 dependencies {
     implementation(libs.jdbc.postgresql)
+    implementation(libs.testcontainers.postgresql)
+    implementation(libs.logback.classic)
     testImplementation(kotlin("test"))
 }
 
