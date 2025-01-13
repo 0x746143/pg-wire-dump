@@ -91,7 +91,7 @@ fun String.toMixedHex(): String {
         val highNibble = ch1.hexToInt(i) shl 4
         val lowNibble = ch2.hexToInt(i)
         val code = highNibble or lowNibble
-        if (isMessageLength || code < 32 || code > 126) {
+        if (isMessageLength || code < 33 || code > 126) {
             if (hexCount == 0) {
                 buffer.append("[")
             }
