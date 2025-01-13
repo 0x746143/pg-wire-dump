@@ -50,7 +50,7 @@ fun main() {
     }
     val processBuilder = ProcessBuilder(
         "docker", "exec", container.containerName, "tshark",
-        "-i", "any", "-f", "tcp port 5432", "-Y", "pgsql", "-T", "fields",
+        "-l", "-i", "any", "-f", "tcp port 5432", "-Y", "pgsql", "-T", "fields",
         "-e", "pgsql.frontend", "-e", "pgsql.type", "-e", "tcp.pdu.size", "-e", "tcp.payload"
     )
     val process = processBuilder.start()
