@@ -60,21 +60,24 @@ fun main() {
     }.forEach(::printMessages)
 }
 
+var prevFragment: String = ""
+
 fun printMessages(packet: String) {
     val fields = packet.split("\t")
-    val frontends = fields[0].split(",")
-    val commandNames = fields[1].split(",")
+    val sourceTypes = fields[0].split(",")
+    val messageTypes = fields[1].split(",")
     val pduSizes = fields[2].split(",")
-    val tcpPayload = fields[3]
+    val tcpPayload = prevFragment + fields[3]
     var pduStartIndex = 0
-    repeat(frontends.size) { i ->
-        val f = if (frontends[i] == "1") "F" else "B"
-        val commandName = commandNames[i]
+    repeat(sourceTypes.size) { i ->
+        val sourceType = if (sourceTypes[i] == "1") "F" else "B"
+        val messageType = messageTypes[i]
         val pduSize = pduSizes[i].toInt()
         val pduEndIndex = pduStartIndex + pduSize * 2
-        val hex = tcpPayload.substring(pduStartIndex, pduEndIndex)
+        val hexValue = tcpPayload.substring(pduStartIndex, pduEndIndex)
         pduStartIndex = pduEndIndex
-        val message = "$f - $commandName: ${hex.toMixedHex()}"
+        val message = "$sourceType - $messageType: ${hexValue.toMixedHex()}"
+        prevFragment = tcpPayload.substring(pduStartIndex, tcpPayload.length)
         println(message)
     }
     println()
