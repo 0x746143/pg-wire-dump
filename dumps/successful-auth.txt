@@ -1,0 +1,33 @@
+F - SSL request: [0000000804d216]/
+
+F - Startup message: [0000009600030000]user[00]postgres[00]database[00]postgres[00]client_encoding[00]UTF8[00]DateStyle[00]ISO[00]TimeZone[00]UTC[00]extra_float_digits[00]3[00]application_name[00]PostgreSQL[20]JDBC[20]Driver[0000]
+
+B - Authentication request: R[000000170000000a]SCRAM-SHA-256[0000]
+
+F - SASLInitialResponse message: p[00000037]SCRAM-SHA-256[00000000]!n,,n=*,r='#XQ^GjTl:X~}Bb/:/\G(b9j
+
+B - Authentication request: R[0000005c0000000b]r='#XQ^GjTl:X~}Bb/:/\G(b9ja9WI9mU6i941eUOtvGYYDmxq,s=H4HYUFHnqBWV+wrwtucZOg==,i=4096
+
+F - SASLResponse message: p[0000006c]c=biws,r='#XQ^GjTl:X~}Bb/:/\G(b9ja9WI9mU6i941eUOtvGYYDmxq,p=SIWrb5V0V2wQFDHfpQH46+ytQD9LLYvPFIaB5lKGOZc=
+
+B - Authentication request: R[000000360000000c]v=C8RdfikxhucCetjx37wuBgo65O2Jm4CSKR5ox1bre/0=
+B - Authentication request: R[0000000800000000]
+B - Parameter status: S[00000017]in_hot_standby[00]off[00]
+B - Parameter status: S[00000019]integer_datetimes[00]on[00]
+B - Parameter status: S[00000011]TimeZone[00]UTC[00]
+B - Parameter status: S[0000001b]IntervalStyle[00]postgres[00]
+B - Parameter status: S[00000014]is_superuser[00]on[00]
+B - Parameter status: S[0000002c]application_name[00]PostgreSQL[20]JDBC[20]Driver[00]
+B - Parameter status: S[00000026]default_transaction_read_only[00]off[00]
+B - Parameter status: S[0000001a]scram_iterations[00]4096[00]
+B - Parameter status: S[00000017]DateStyle[00]ISO,[20]MDY[00]
+B - Parameter status: S[00000023]standard_conforming_strings[00]on[00]
+B - Parameter status: S[00000023]session_authorization[00]postgres[00]
+B - Parameter status: S[00000019]client_encoding[00]UTF8[00]
+B - Parameter status: S[00000032]server_version[00]17.2[20](Debian[20]17.2-1.pgdg120+1)[00]
+B - Parameter status: S[00000019]server_encoding[00]UTF8[00]
+B - Backend key data: K[0000000c0000008b7f9a]M[11]
+B - Ready for query: Z[00000005]I
+
+F - Termination: X[00000004]
+

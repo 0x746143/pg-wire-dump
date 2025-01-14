@@ -1,0 +1,14 @@
+F - SSL request: [0000000804d216]/
+
+F - Startup message: [0000009c00030000]user[00]incorrect-user[00]database[00]postgres[00]client_encoding[00]UTF8[00]DateStyle[00]ISO[00]TimeZone[00]UTC[00]extra_float_digits[00]3[00]application_name[00]PostgreSQL[20]JDBC[20]Driver[0000]
+
+B - Authentication request: R[000000170000000a]SCRAM-SHA-256[0000]
+
+F - SASLInitialResponse message: p[00000037]SCRAM-SHA-256[00000000]!n,,n=*,r=zr#Y![3RC/->.&2wP4mZKamq
+
+B - Authentication request: R[0000005c0000000b]r=zr#Y![3RC/->.&2wP4mZKamqGEvgFFiUyrEgv/Tpgv2UbK6D,s=Nr18saoMUIG+QZBBDy15Zw==,i=4096
+
+F - SASLResponse message: p[0000006c]c=biws,r=zr#Y![3RC/->.&2wP4mZKamqGEvgFFiUyrEgv/Tpgv2UbK6D,p=jYdPtE3REUlFmF/y2PeTZVHKRgNCcmG233NpRBBX4v4=
+
+B - Error: E[0000006e]SFATAL[00]VFATAL[00]C28P01[00]Mpassword[20]authentication[20]failed[20]for[20]user[20]"incorrect-user"[00]Fauth.c[00]L321[00]Rauth_failed[0000]
+
