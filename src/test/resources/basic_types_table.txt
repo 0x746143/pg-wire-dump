@@ -1,0 +1,15 @@
+F - Parse: P[0000002700]select[20]*[20]from[20]basic_types_table[000000]
+F - Bind: B[0000000c0000000000000000]
+F - Describe: D[00000006]P[00]
+F - Execute: E[000000090000000000]
+F - Sync: S[00000004]
+
+B - Parse completion: 1[00000004]
+B - Bind completion: 2[00000004]
+B - Row description: T[000000480002]integer_column[000000]@[000001000000170004ffffffff0000]varchar_column[000000]@[00000200000413ffffffffffff0000]
+B - Data row: D[0000001d000200000001]0[0000000e]varchar_data_0
+B - Data row: D[0000001d000200000001]1[0000000e]varchar_data_1
+B - Command completion: C[0000000d]SELECT[20]2[00]
+B - Ready for query: Z[00000005]I
+
+
