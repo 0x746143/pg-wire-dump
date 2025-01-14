@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package x746143
+package x746143.pgwiredump
 
 class TsharkParser {
     private var prevFragment: String = ""
-    val messages = mutableListOf<String>()
 
-    fun parseLine(line: String) {
+    fun parseLine(line: String): List<String> {
+        val messages = mutableListOf<String>()
         val fields = line.split("\t")
         val sourceTypes = fields[0].split(",")
         val messageTypes = fields[1].split(",")
@@ -37,6 +37,7 @@ class TsharkParser {
             messages.add(message)
             prevFragment = tcpPayload.substring(pduStartIndex, tcpPayload.length)
         }
+        return messages
     }
 
     private fun String.toMixedHex(): String {
