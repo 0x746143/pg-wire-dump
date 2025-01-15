@@ -45,6 +45,24 @@ class JdbcClient(
         return count
     }
 
+    fun preparedQuery(sql: String, vararg params: Any): Int {
+        var count = 0
+        connection?.prepareStatement(sql)?.use {
+            params.forEachIndexed { index, value ->
+                when (value) {
+                    is Int -> it.setInt(index + 1, value)
+                    is String -> it.setString(index + 1, value)
+                    else -> throw Exception("Unsupported type: ${value::class.qualifiedName}")
+                }
+            }
+            val resultSet = it.executeQuery()
+            while (resultSet.next()) {
+                count++
+            }
+        }
+        return count
+    }
+
     override fun close() {
         connection?.close()
     }
