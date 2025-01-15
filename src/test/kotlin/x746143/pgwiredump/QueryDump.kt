@@ -19,10 +19,24 @@ import kotlin.test.Test
 
 class QueryDump : PgContainerLifecycle() {
     @Test
-    fun dumpSimpleQuery() {
+    fun dumpSimpleSelect() {
         container.jdbcClient.connect().use {
-            container.dumpPgTraffic("simple-query.txt") {
+            container.dumpPgTraffic("simple-select.txt") {
                 it.simpleQuery("select * from basic_types_table")
+            }
+        }
+    }
+
+    @Test
+    fun dumpPreparedSelect() {
+        container.jdbcClient.connect().use {
+            container.dumpPgTraffic("prepared-select.txt") {
+                val sql = """
+                    select integer_data_col, varchar_data_col
+                    from filter_query_table
+                    where integer_filter_col = ? and varchar_filter_col = ?
+                    """.trimIndent()
+                it.preparedQuery(sql, 1, "varchar_filter_1")
             }
         }
     }
