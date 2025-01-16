@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package x746143.pgwiredump
+package x746143.pgwiredump.test
 
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
+import x746143.pgwiredump.JdbcClient
+import x746143.pgwiredump.PgTsharkContainer
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 open class PgContainerLifecycle {

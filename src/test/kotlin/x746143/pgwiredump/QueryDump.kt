@@ -15,6 +15,7 @@
  */
 package x746143.pgwiredump
 
+import x746143.pgwiredump.test.PgContainerLifecycle
 import kotlin.test.Test
 
 class QueryDump : PgContainerLifecycle() {

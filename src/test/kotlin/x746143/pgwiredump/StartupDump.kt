@@ -16,6 +16,8 @@
 package x746143.pgwiredump
 
 import org.postgresql.util.PSQLException
+import x746143.pgwiredump.test.PgContainerLifecycle
+import x746143.pgwiredump.test.verifyLineCount
 import java.io.ByteArrayOutputStream
 import kotlin.test.Test
 

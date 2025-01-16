@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package x746143.pgwiredump
+package x746143.pgwiredump.test
 
 import java.io.ByteArrayOutputStream
 import kotlin.test.Test
