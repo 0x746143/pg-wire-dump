@@ -17,6 +17,7 @@ package x746143.pgwiredump
 
 import java.sql.Connection
 import java.sql.DriverManager
+import java.sql.PreparedStatement
 
 class JdbcClient(
     private val url: String,
@@ -25,11 +26,12 @@ class JdbcClient(
 ) : AutoCloseable {
     private var connection: Connection? = null
 
-    fun connect(): JdbcClient {
+    fun connect(cache: Boolean = false): JdbcClient {
         if (connection != null) {
             println("The connection has already been established before")
         } else {
-            connection = DriverManager.getConnection(url, user, password)
+            val cacheParam = if (cache) "?prepareThreshold=1" else ""
+            connection = DriverManager.getConnection(url + cacheParam, user, password)
         }
         return this
     }
@@ -45,26 +47,30 @@ class JdbcClient(
         return count
     }
 
-    fun preparedQuery(sql: String, vararg params: Any): Int {
-        var count = 0
+    fun preparedQuery(sql: String, vararg params: Any) {
         connection?.prepareStatement(sql)?.use {
-            params.forEachIndexed { index, value ->
-                when (value) {
-                    is Int -> it.setInt(index + 1, value)
-                    is String -> it.setString(index + 1, value)
-                    else -> throw Exception("Unsupported type: ${value::class.qualifiedName}")
-                }
-            }
-            val resultSet = it.executeQuery()
-            while (resultSet.next()) {
-                count++
-            }
+            it.executeQuery(*params)
         }
-        return count
+    }
+
+    fun preparedStatement(sql: String, block: PreparedStatement.() -> Unit) {
+        connection?.prepareStatement(sql)?.use {
+            it.block()
+        }
     }
 
     override fun close() {
         connection?.close()
     }
+}
 
+fun PreparedStatement.executeQuery(vararg params: Any) {
+    params.forEachIndexed { index, value ->
+        when (value) {
+            is Int -> setInt(index + 1, value)
+            is String -> setString(index + 1, value)
+            else -> throw Exception("Unsupported type: ${value::class.qualifiedName}")
+        }
+    }
+    executeQuery()
 }

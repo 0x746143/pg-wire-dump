@@ -33,4 +33,12 @@ open class PgContainerLifecycle {
     fun tearDown() {
         container.stop()
     }
+
+    fun dumpJdbcPgTraffic(filename: String, cache: Boolean = false, block: JdbcClient.() -> Unit) {
+        container.jdbcClient.connect(cache).use {
+            container.dumpPgTraffic(filename) {
+                it.block()
+            }
+        }
+    }
 }

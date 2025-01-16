@@ -18,25 +18,36 @@ package x746143.pgwiredump
 import kotlin.test.Test
 
 class QueryDump : PgContainerLifecycle() {
+
+    private val filterTableSql = """
+        select integer_data_col, varchar_data_col
+        from filter_query_table
+        where integer_filter_col = ? and varchar_filter_col = ?
+        """.trimIndent()
+
+
     @Test
     fun dumpSimpleSelect() {
-        container.jdbcClient.connect().use {
-            container.dumpPgTraffic("simple-select.txt") {
-                it.simpleQuery("select * from basic_types_table")
-            }
+        dumpJdbcPgTraffic("simple-select.txt") {
+            simpleQuery("select * from basic_types_table")
         }
     }
 
     @Test
     fun dumpPreparedSelect() {
-        container.jdbcClient.connect().use {
-            container.dumpPgTraffic("prepared-select.txt") {
-                val sql = """
-                    select integer_data_col, varchar_data_col
-                    from filter_query_table
-                    where integer_filter_col = ? and varchar_filter_col = ?
-                    """.trimIndent()
-                it.preparedQuery(sql, 1, "varchar_filter_1")
+        dumpJdbcPgTraffic("prepared-select.txt") {
+            preparedQuery(filterTableSql, 1, "varchar_filter_1")
+        }
+    }
+
+    @Test
+    fun dumpCachedPreparedSelect() {
+        dumpJdbcPgTraffic("cached-prepared-select.txt", true) {
+            preparedStatement(filterTableSql) {
+                executeQuery(0, "varchar_filter_0")
+                executeQuery(0, "varchar_filter_1")
+                executeQuery(1, "varchar_filter_0")
+                executeQuery(1, "varchar_filter_1")
             }
         }
     }
