@@ -38,10 +38,10 @@ class IntegrationTest : PgContainerLifecycle() {
         val output = ByteArrayOutputStream()
         container.jdbcClient.connect().use {
             container.dumpPgTraffic(output) {
-                val count = it.simpleQuery("select * from pg_catalog.pg_type")
-                assertEquals(619, count)
+                val count = it.simpleQuery("select * from md5_test_data")
+                assertEquals(10000, count)
             }
         }
-        output.verifyContent("pg_catalog.pg_type.txt")
+        output.verifyLineCount(10076)
     }
 }
