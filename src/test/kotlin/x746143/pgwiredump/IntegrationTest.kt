@@ -30,7 +30,7 @@ class IntegrationTest : PgContainerLifecycle() {
                 assertEquals(2, count)
             }
         }
-        verifyContent("basic_types_table.txt", output)
+        output.verifyContent("basic_types_table.txt")
     }
 
     @Test
@@ -42,6 +42,6 @@ class IntegrationTest : PgContainerLifecycle() {
                 assertEquals(619, count)
             }
         }
-        verifyContent("pg_catalog.pg_type.txt", output)
+        output.verifyContent("pg_catalog.pg_type.txt")
     }
 }

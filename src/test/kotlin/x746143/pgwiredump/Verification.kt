@@ -21,14 +21,14 @@ import java.nio.file.Path
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
-fun verifyContent(filename: String, actualContent: ByteArrayOutputStream) {
+fun ByteArrayOutputStream.verifyContent(filename: String) {
     val resource = ClassLoader.getSystemClassLoader().getResource(filename) ?: throw Exception("File $filename not found")
     val expectedLines = Files.readAllLines(Path.of(resource.path))
-    val actualLines = actualContent.toString().split(System.lineSeparator())
+    val actualLines = toString().split(System.lineSeparator())
     assertContentEquals(expectedLines, actualLines)
 }
 
-fun verifyLineCount(expectedLineCount: Int, actualContent: ByteArrayOutputStream) {
-    val actualLines = actualContent.toString().split(System.lineSeparator()).size
+fun ByteArrayOutputStream.verifyLineCount(expectedLineCount: Int) {
+    val actualLines = toString().split(System.lineSeparator()).size
     assertEquals(expectedLineCount, actualLines)
 }

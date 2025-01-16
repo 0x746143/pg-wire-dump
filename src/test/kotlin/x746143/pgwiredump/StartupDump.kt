@@ -29,7 +29,7 @@ class StartupDump : PgContainerLifecycle() {
                 it.connect()
             }
         }
-        verifyLineCount(34, output)
+        output.verifyLineCount(34)
     }
 
     @Test
@@ -43,7 +43,7 @@ class StartupDump : PgContainerLifecycle() {
                 }
             }
         }
-        verifyLineCount(15, output)
+        output.verifyLineCount(15)
     }
 
 }
