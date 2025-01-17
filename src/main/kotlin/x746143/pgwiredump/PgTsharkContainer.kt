@@ -15,12 +15,14 @@
  */
 package x746143.pgwiredump
 
+import com.github.dockerjava.api.command.InspectContainerResponse
 import com.github.dockerjava.api.model.ExposedPort
 import com.github.dockerjava.api.model.HostConfig
 import com.github.dockerjava.api.model.PortBinding
 import com.github.dockerjava.api.model.Ports
 import org.slf4j.LoggerFactory
 import org.testcontainers.containers.GenericContainer
+import org.testcontainers.containers.output.Slf4jLogConsumer
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.images.builder.ImageFromDockerfile
 import org.testcontainers.shaded.org.apache.commons.io.output.TeeOutputStream
@@ -45,11 +47,7 @@ class PgTsharkContainer(var hostPort: Int = 0) : GenericContainer<PgTsharkContai
 
     val jdbcClient get() = JdbcClient(jdbcUrl, username, password)
 
-    companion object {
-        private val logger = LoggerFactory.getLogger(PgTsharkContainer::class.java)
-    }
-
-    override fun start() {
+    override fun configure() {
         withEnv("POSTGRES_USER", username)
         withEnv("POSTGRES_PASSWORD", password)
         withEnv("POSTGRES_DB", dbname)
@@ -61,23 +59,21 @@ class PgTsharkContainer(var hostPort: Int = 0) : GenericContainer<PgTsharkContai
                 )
             }
         }
-        super.start()
-        Runtime.getRuntime().addShutdownHook(Thread {
-            if (isRunning) {
-                stop()
-            }
-        })
+        withCommand("postgres", "-c", "fsync=off")
+        withLogConsumer(Slf4jLogConsumer(LoggerFactory.getLogger("PostgreSQL")));
+        waitStrategy = Wait.forListeningPort()
+    }
+
+    override fun containerIsStarted(containerInfo: InspectContainerResponse?) {
         hostPort = firstMappedPort
         jdbcUrl = "jdbc:postgresql://$host:$hostPort/$dbname"
-        waitingFor(Wait.forListeningPorts(hostPort))
-        logger.info("Container is started (JDBC URL: $jdbcUrl)")
+        logger().info("Container is started (JDBC URL: $jdbcUrl)")
         println()
     }
 
-    override fun stop() {
+    override fun containerIsStopping(containerInfo: InspectContainerResponse?) {
         executor.shutdownNow()
         executor.awaitTermination(1, TimeUnit.SECONDS)
-        super.stop()
     }
 
     private fun runTshark(block: (Process) -> Unit) {

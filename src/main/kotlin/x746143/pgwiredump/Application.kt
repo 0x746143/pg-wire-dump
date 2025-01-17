@@ -17,6 +17,11 @@ package x746143.pgwiredump
 
 fun main() {
     with(PgTsharkContainer(54329)) {
+        Runtime.getRuntime().addShutdownHook(Thread {
+            if (isRunning) {
+                stop()
+            }
+        })
         start()
         monitorPgTraffic()
     }
