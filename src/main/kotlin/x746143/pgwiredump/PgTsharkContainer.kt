@@ -60,7 +60,7 @@ class PgTsharkContainer(var hostPort: Int = 0) : GenericContainer<PgTsharkContai
             }
         }
         withCommand("postgres", "-c", "fsync=off")
-        withLogConsumer(Slf4jLogConsumer(LoggerFactory.getLogger("PostgreSQL")));
+        withLogConsumer(Slf4jLogConsumer(LoggerFactory.getLogger("PostgreSQL")))
         waitStrategy = Wait.forListeningPort()
     }
 

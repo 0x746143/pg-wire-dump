@@ -1,0 +1,13 @@
+F - Parse: P[0000004e00]insert[20]into[20]modifiable_table[20](varchar_col)[20]values[20]($1)[0a]RETURNING[20]*[00000100000413]
+F - Bind: B[0000002100000001000000010000000f]varchar_value_1[0000]
+F - Describe: D[00000006]P[00]
+F - Execute: E[000000090000000000]
+F - Sync: S[00000004]
+
+B - Parse completion: 1[00000004]
+B - Bind completion: 2[00000004]
+B - Row description: T[000000390002]id[000000]@[0b0001000000170004ffffffff0000]varchar_col[000000]@[0b000200000413ffffffffffff0000]
+B - Data row: D[0000001e000200000001]1[0000000f]varchar_value_1
+B - Command completion: C[0000000f]INSERT[20]0[20]1[00]
+B - Ready for query: Z[00000005]I
+

@@ -22,6 +22,11 @@ insert into filter_query_table values(5, 'varchar_data_5', 1, 'varchar_filter_0'
 insert into filter_query_table values(6, 'varchar_data_6', 1, 'varchar_filter_1');
 insert into filter_query_table values(7, 'varchar_data_7', 1, 'varchar_filter_1');
 
+create table modifiable_table (
+    id integer  generated always as identity primary key,
+    varchar_col varchar not null
+);
+
 -- A large table to test TCP-fragmented data parsing
 create table md5_test_data (
     id          integer not null,

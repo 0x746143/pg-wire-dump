@@ -18,6 +18,7 @@ package x746143.pgwiredump
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.PreparedStatement
+import java.sql.Statement
 
 class JdbcClient(
     private val url: String,
@@ -53,6 +54,18 @@ class JdbcClient(
         }
     }
 
+    fun executeUpdate(sql: String, vararg params: Any) {
+        connection?.prepareStatement(sql)?.use {
+            it.executeUpdate(*params)
+        }
+    }
+
+    fun executeUpdateWithReturning(sql: String, vararg params: Any) {
+        connection?.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)?.use {
+            it.executeUpdate(*params)
+        }
+    }
+
     fun preparedStatement(sql: String, block: PreparedStatement.() -> Unit) {
         connection?.prepareStatement(sql)?.use {
             it.block()
@@ -65,6 +78,16 @@ class JdbcClient(
 }
 
 fun PreparedStatement.executeQuery(vararg params: Any) {
+    setParams(*params)
+    executeQuery()
+}
+
+fun PreparedStatement.executeUpdate(vararg params: Any) {
+    setParams(*params)
+    executeUpdate()
+}
+
+private fun PreparedStatement.setParams(vararg params: Any) {
     params.forEachIndexed { index, value ->
         when (value) {
             is Int -> setInt(index + 1, value)
@@ -72,5 +95,4 @@ fun PreparedStatement.executeQuery(vararg params: Any) {
             else -> throw Exception("Unsupported type: ${value::class.qualifiedName}")
         }
     }
-    executeQuery()
 }
